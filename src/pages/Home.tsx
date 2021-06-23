@@ -1,6 +1,8 @@
+import { useContext } from 'react';
+
 import { useHistory } from 'react-router-dom';
 
-import { auth, firebase } from '../services/firebase';
+import { authContext } from '../App';
 
 import illustrationImg from '../assets/images/illustration.svg';
 import logoImg from '../assets/images/logo.svg';
@@ -11,14 +13,20 @@ import { Button } from '../components/Button';
 
 import '../styles/auth.scss';
 
+
 //webpack (snowpack, vite, ...)
 
 export function Home() {
 
     const history = useHistory();
+    const { user, signInWithGoogle } = useContext(authContext)
 
 
     function handCreateRoom() {
+        if (!user) {
+            signInWithGoogle()  
+        }
+
         history.push('/rooms/new');           
     }
 
